@@ -4,15 +4,36 @@ import { SERIES_COLORS, parsePlateExpiry } from '../vehicles'
 
 const SERIES_ORDER = ['E202', 'E001', 'E009', 'E007', 'P301', 'P201', 'P567', 'E202-10']
 
+// Test types that need location breakdown
+const LOC_SPLIT_TYPES = new Set(['PS', 'Driving'])
+
 export default function SummaryBar({ vehicles, bookings }) {
-  const { total, bookedCount, expiredCount, seriesRows } = useMemo(() => {
+  const { total, bookedCount, expiredCount, seriesRows, testTypeRows } = useMemo(() => {
     const today = dayjs().format('YYYY-MM-DD')
     const now = new Date()
+
+    const vehicleMap = Object.fromEntries(vehicles.map(v => [v.id, v]))
 
     const bookedIds = new Set()
     bookings.forEach(b => {
       if (b.start_date <= today && b.end_date >= today) bookedIds.add(b.vehicle_id)
     })
+
+    // Count today's daytime (白班) bookings by test type
+    const typeCount = {}  // { testType: { total, sz, cc } }
+    bookings.forEach(b => {
+      if (b.start_date <= today && b.end_date >= today && b.shift !== '夜班') {
+        const t = b.test_type || '其他'
+        if (!typeCount[t]) typeCount[t] = { total: 0, sz: 0, cc: 0 }
+        typeCount[t].total++
+        const loc = vehicleMap[b.vehicle_id]?.location
+        if (loc === '深圳') typeCount[t].sz++
+        else if (loc === '长春') typeCount[t].cc++
+      }
+    })
+    const testTypeRows = Object.entries(typeCount)
+      .sort((a, b) => b[1].total - a[1].total)
+      .map(([type, counts]) => ({ type, ...counts }))
 
     let expiredCount = 0
     const map = {}
@@ -27,7 +48,7 @@ export default function SummaryBar({ vehicles, bookings }) {
     const knownRows = SERIES_ORDER.filter(s => map[s]).map(s => ({ series: s, ...map[s] }))
     const extraRows = Object.keys(map).filter(s => !SERIES_ORDER.includes(s)).map(s => ({ series: s, ...map[s] }))
 
-    return { total: vehicles.length, bookedCount: bookedIds.size, expiredCount, seriesRows: [...knownRows, ...extraRows] }
+    return { total: vehicles.length, bookedCount: bookedIds.size, expiredCount, seriesRows: [...knownRows, ...extraRows], testTypeRows }
   }, [vehicles, bookings])
 
   const stats = [
@@ -66,6 +87,27 @@ export default function SummaryBar({ vehicles, bookings }) {
         ))}
         <span className="summary-series-legend">总/已约/未约</span>
       </div>
+
+      {testTypeRows.length > 0 && (
+        <>
+          <div className="summary-divider" />
+          <div className="summary-testtype-list">
+            <span className="summary-testtype-title">今日白班</span>
+            {testTypeRows.map(({ type, total: cnt, sz, cc }) => (
+              <div key={type} className="summary-testtype-chip">
+                <span className="summary-testtype-name">{type}</span>
+                <span className="summary-testtype-count">{cnt}组</span>
+                {LOC_SPLIT_TYPES.has(type) && (cnt > 0) && (
+                  <span className="summary-testtype-loc">
+                    {sz > 0 && <span className="loc-sz-tag">深圳{sz}</span>}
+                    {cc > 0 && <span className="loc-cc-tag">长春{cc}</span>}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }

@@ -184,6 +184,132 @@ body {
   margin-left: 4px;
 }
 
+/* ─── Test type summary ─────────────────────────────────────── */
+.summary-testtype-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.summary-testtype-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-right: 4px;
+}
+
+.summary-testtype-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.summary-testtype-name {
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.summary-testtype-count {
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-testtype-loc {
+  display: flex;
+  gap: 4px;
+  margin-left: 2px;
+}
+
+.loc-sz-tag {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.loc-cc-tag {
+  background: #FEF9C3;
+  color: #854D0E;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* ─── Test type summary ─────────────────────────────────────── */
+.summary-testtype-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.summary-testtype-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-right: 4px;
+}
+
+.summary-testtype-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.summary-testtype-name {
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.summary-testtype-count {
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-testtype-loc {
+  display: flex;
+  gap: 4px;
+  margin-left: 2px;
+}
+
+.loc-sz-tag {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.loc-cc-tag {
+  background: #FEF9C3;
+  color: #854D0E;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
 /* ─── Toolbar ───────────────────────────────────────────────── */
 .toolbar {
   display: flex;
