@@ -69,7 +69,7 @@ export default function BookingModal({ vehicle, date, initialBooking, bookings, 
 
   function handleSave() {
     setSubmitAttempted(true)
-    if (!form.tester.trim() || conflict) return
+    if (conflict) return
     onSave({
       ...(editing ? { id: editing.id } : {}),
       vehicle_id: vehicle.id,
@@ -179,16 +179,12 @@ export default function BookingModal({ vehicle, date, initialBooking, bookings, 
             </div>
 
             <div className="form-row">
-              <label>预约人 *</label>
+              <label>预约人</label>
               <input
                 value={form.tester}
-                onChange={e => { setForm(f => ({ ...f, tester: e.target.value })); setSubmitAttempted(false) }}
-                placeholder="姓名"
-                style={submitAttempted && !form.tester.trim() ? { borderColor: '#EF4444' } : {}}
+                onChange={e => setForm(f => ({ ...f, tester: e.target.value }))}
+                placeholder="姓名（可选）"
               />
-              {submitAttempted && !form.tester.trim() && (
-                <span className="field-error">请填写预约人姓名</span>
-              )}
             </div>
 
             <div className="date-range-row">
