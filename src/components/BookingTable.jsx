@@ -53,8 +53,6 @@ function locClass(loc) {
 }
 
 export default function BookingTable({ weekStart, bookings, vehicles, testTypes, onCellClick, onVehicleEdit, selection, clipboard, onSelectionStart, onSelectionExtend, onSelectionEnd }) {
-  const [hoverTimer, setHoverTimer] = React.useState(null)
-
   useEffect(() => {
     const handleMouseUp = () => { if (selection?.isSelecting) onSelectionEnd() }
     document.addEventListener('mouseup', handleMouseUp)
@@ -223,22 +221,10 @@ export default function BookingTable({ weekStart, bookings, vehicles, testTypes,
                       const handleMouseEnter = () => {
                         if (selection?.isSelecting) {
                           onSelectionExtend?.(v.id, d.toDate(), vehicles)
-                          return
-                        }
-                        if (hasBookings) {
-                          const timer = setTimeout(() => {
-                            onCellClick(v, d.toDate())
-                          }, 1000)
-                          setHoverTimer(timer)
                         }
                       }
 
-                      const handleMouseLeave = () => {
-                        if (hoverTimer) {
-                          clearTimeout(hoverTimer)
-                          setHoverTimer(null)
-                        }
-                      }
+                      const handleMouseLeave = () => {}
 
                       const handleClick = (e) => {
                         if (selection?.selectedCells?.length > 1) return
