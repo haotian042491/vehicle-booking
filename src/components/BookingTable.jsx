@@ -226,7 +226,7 @@ export default function BookingTable({ weekStart, bookings, vehicles, testTypes,
 
                       const handleMouseLeave = () => {}
 
-                      const handleClick = (e) => {
+                      const handleDoubleClick = (e) => {
                         if (selection?.selectedCells?.length > 1) return
                         onCellClick(v, d.toDate())
                       }
@@ -235,7 +235,7 @@ export default function BookingTable({ weekStart, bookings, vehicles, testTypes,
                         <td
                           key={key}
                           className={`cell-day${isGray ? ' cell-day-weekend' : ''}${isToday ? ' cell-day-today' : ''}${isSelected ? ' cell-selected' : ''}${isCut ? ' cell-cut' : ''}`}
-                          onClick={handleClick}
+                          onDoubleClick={handleDoubleClick}
                           onMouseDown={handleMouseDown}
                           onMouseEnter={handleMouseEnter}
                           onMouseLeave={handleMouseLeave}
@@ -255,7 +255,7 @@ export default function BookingTable({ weekStart, bookings, vehicles, testTypes,
                                   key={bk.id}
                                   className={`booking-chip${isConflict ? ' booking-chip-conflict' : ''}`}
                                   style={{ background: tt.bg, color: tt.color }}
-                                  onClick={e => { e.stopPropagation(); onCellClick(v, d.toDate()) }}
+                                  onDoubleClick={e => { e.stopPropagation(); onCellClick(v, d.toDate()) }}
                                 >
                                   <span className={`chip-shift ${bk.shift === '夜班' ? 'chip-shift-night' : 'chip-shift-day'}`}>
                                     {bk.shift === '夜班' ? '夜' : '白'}
