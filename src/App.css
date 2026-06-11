@@ -639,12 +639,9 @@ thead .col-sticky { z-index: 30; }
 }
 
 .cell-day:hover .cell-day-add-hint {
-  opacity: 0.92;
-  transform: scale(1.05);
-}
-
-.cell-day:hover .cell-day-add-hint {
   opacity: 1;
+  transform: scale(1.05);
+  pointer-events: auto;
 }
 
 .booking-chip {
